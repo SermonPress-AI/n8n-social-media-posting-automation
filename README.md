@@ -33,6 +33,7 @@ When a church uploads its latest sermon, these workflows pull the sermon’s tit
 /docs            - Setup and configuration instructions
 /templates       - Example post templates (long & short form)
 .gitignore       - Prevents committing sensitive or local files
+LICENSE          - MIT Open-Source Licensing
 README.md        - This file
 ```
 
