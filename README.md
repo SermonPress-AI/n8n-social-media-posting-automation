@@ -24,6 +24,13 @@ When a church uploads its latest sermon, these workflows pull the sermon’s tit
 * API credentials for connected social media platforms
   *(Store securely in n8n’s credentials manager or a `.env` file — never commit credentials to the repository.)*
 
+### Environment Variables & Credentials
+
+| Name | Purpose | Where to set |
+| ---- | ------- | ------------ |
+| `WORDPRESS_BASE_URL` | Base URL of your WordPress site (without trailing slash). Used by HTTP Request nodes to pull sermon data. | Environment variable in n8n |
+| `OpenAi account` | OpenAI API key used for generating Facebook post content. | n8n credentials manager |
+
 ---
 
 ## 📂 Repository Structure
