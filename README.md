@@ -30,6 +30,7 @@ When a church uploads its latest sermon, these workflows pull the sermon’s tit
 
 ```
 /workflows       - n8n workflow export files (.json)
+wordpress-to-facebook-posting.json - Workflow to share WordPress posts to Facebook
 /docs            - Setup and configuration instructions
 /templates       - Example post templates (long & short form)
 .gitignore       - Prevents committing sensitive or local files
@@ -51,7 +52,7 @@ README.md        - This file
 2. **Import Workflows into n8n**
 
    * Open n8n.
-   * Go to **Import from File** and select a `.json` workflow from `/workflows`.
+   * Go to **Import from File** and select the `wordpress-to-facebook-posting.json` workflow.
 
 3. **Configure Credentials**
 
