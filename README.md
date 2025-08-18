@@ -68,8 +68,17 @@ README.md        - This file
 ## 🔒 Security Notes
 
 * Never commit API keys, tokens, or passwords.
-* Keep `.env` files and local configuration out of version control.
 * Use n8n’s built-in credentials manager for sensitive information.
+
+### Environment-specific exclusions
+
+The repository's `.gitignore` prevents committing local files that should remain private, including:
+
+* `.env` – environment variables
+* `credentials.json` – service credentials
+* `node_modules/` – installed dependencies
+
+Add any other files specific to your setup to `.gitignore` to keep them out of version control.
 
 ---
 
