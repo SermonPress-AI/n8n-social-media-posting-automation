@@ -20,7 +20,7 @@
     },
     {
       "parameters": {
-        "url": "http://lukashoyle2025.mystagingwebsite.com/wp-json/wp/v2/ctc_sermon?per_page=5&orderby=date&order=desc&_embed",
+        "url": "={{ $env.WORDPRESS_BASE_URL + '/wp-json/wp/v2/ctc_sermon?per_page=5&orderby=date&order=desc&_embed' }}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -34,7 +34,7 @@
     },
     {
       "parameters": {
-        "url": "=http://lukashoyle2025.mystagingwebsite.com/wp-json/wp/v2/ctc_sermon/{{ $json.id }}?_fields=id,link,title,rendered,content,rendered",
+        "url": "={{ $env.WORDPRESS_BASE_URL + '/wp-json/wp/v2/ctc_sermon/' + $json.id + '?_fields=id,link,title,rendered,content,rendered' }}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -85,10 +85,10 @@
       "id": "9821d108-5293-4718-b3f0-52fb89f33ffc",
       "name": "Generate Facebook post content",
       "credentials": {
-        "openAiApi": {
-          "id": "INSERT_YOURS_HERE",
-          "name": "OpenAi account"
-        }
+          "openAiApi": {
+            "id": "={{ $credentials.openAiApi.id }}",
+            "name": "OpenAi account"
+          }
       }
     },
     {
