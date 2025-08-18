@@ -37,6 +37,8 @@ LICENSE          - MIT Open-Source Licensing
 README.md        - This file
 ```
 
+An example workflow `WordPress to FaceBook Posting.json` is available in `workflows/`.
+
 ---
 
 ## 🚀 Setup & Usage
