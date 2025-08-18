@@ -1,0 +1,530 @@
+{
+  "name": "WordPress to FaceBook Posting",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "bd2ccd55-accb-4236-8e7f-15485a64d60d",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "http://lukashoyle2025.mystagingwebsite.com/wp-json/wp/v2/ctc_sermon?per_page=5&orderby=date&order=desc&_embed",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "dc40c531-0737-44b0-b64c-61980c4936f7",
+      "name": "Pull data from Wordpress Sermon Post"
+    },
+    {
+      "parameters": {
+        "url": "=http://lukashoyle2025.mystagingwebsite.com/wp-json/wp/v2/ctc_sermon/{{ $json.id }}?_fields=id,link,title,rendered,content,rendered",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "44d725ae-86e1-43d5-bd54-a1954b5d685b",
+      "name": "Pull transcript from Wordpress Data"
+    },
+    {
+      "parameters": {
+        "jsCode": "const html = $json?.content?.rendered || '';\n// strip scripts/styles, tags, collapse spaces, quick-fix a few entities\nconst text = html\n  .replace(/<script[\\s\\S]*?<\\/script>/gi, '')\n  .replace(/<style[\\s\\S]*?<\\/style>/gi, '')\n  .replace(/<[^>]+>/g, ' ')\n  .replace(/\\s+/g, ' ')\n  .replace(/&nbsp;/g, ' ')\n  .replace(/&#8217;|&rsquo;/g, \"'\")\n  .replace(/&quot;/g, '\"')\n  .trim();\n\nreturn [{\n  json: {\n    id: $json.id,\n    title: $json.title?.rendered || '',\n    link: $json.link || '',\n    transcript: text\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        0
+      ],
+      "id": "9a24c9ce-66a7-4768-8af2-7ec1e98090e1",
+      "name": "clean up transcript"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "chatgpt-4o-latest",
+          "mode": "list",
+          "cachedResultName": "CHATGPT-4O-LATEST"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Write a few Facebook captions for a church sermon post.\n\nRequirements:\n- Start with a 1–2 sentence attention-grabbing hook.\n- Follow with a 2–3 sentence summary (clear takeaway).\n- End with: \"Watch the full sermon:\" and the link on its own line.\n- Keep under 900 characters, minimal hashtags (0–2 max), no emojis unless they truly add clarity.\n- write a few of these to give the social media editors options.\n- Remember that all generations should be from a Reformed Christian perspective, so do not breach Reformed docrine in your suggestions.\n\nTitle: {{ $json.title }}\nLink: {{ $json.link }}\nTranscript: {{ $json.transcript }}\n"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        880,
+        0
+      ],
+      "id": "9821d108-5293-4718-b3f0-52fb89f33ffc",
+      "name": "Generate Facebook post content",
+      "credentials": {
+        "openAiApi": {
+          "id": "mC6NHOdsPQp4zPij",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## WordPress Transcript/Sermon Data Pull\n- HTTP Request pulls data from WordPress Sermon Post.\n- HTTP Request #2 pulls specific data from the previous data listed, like sermon title, passage, transcript.\n- Transcript gets cleaned up and polished, before being sent off to the AI generator.",
+        "height": 480,
+        "width": 660
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        160,
+        -280
+      ],
+      "typeVersion": 1,
+      "id": "1f8c134c-8f14-414b-b957-c654e7c20376",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## CRON Trigger \n- Simple schedule based trigger for the automation, very customizable.",
+        "height": 480,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -80,
+        -280
+      ],
+      "typeVersion": 1,
+      "id": "59558948-a2ee-4e0b-8123-d4c1b40157f5",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Social Media Post Generations \n- This very configurable and customizable node allows for the generation of post suggestions using the aformentioned Sermon data.",
+        "height": 480,
+        "width": 340,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        820,
+        -280
+      ],
+      "typeVersion": 1,
+      "id": "887a40c3-8ff9-4435-b8b6-688117e86225",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Human-In-The-Loop  \n- This node automatically sends an email to the church's staff/editors to review the generated content.\n- Approval leads to posting, Disapproval leads to editing and then posting.",
+        "height": 480,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1160,
+        -280
+      ],
+      "typeVersion": 1,
+      "id": "adae7191-96f8-4430-bb76-a8c7ca5f4900",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "hoylelv@gmail.com",
+        "subject": "Sermon Post Approval Needed",
+        "message": "=Review the following proposed content for this week's Facebook post about this week's sermon:\n{{ $json.message.content }}\n\nApprove it or deny it. If approved, content will be posted. If denied, content must be edited and then approved in order for the post to be created.",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1240,
+        0
+      ],
+      "id": "7216e8e2-e5f9-44a4-bd9f-ffe83276857e",
+      "name": "Ouput sent for Approval/Disapproval",
+      "webhookId": "0f87473f-e467-459c-9b7d-ce66fb868370",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "kVg2eSRek3jAJk8v",
+          "name": "Gmail account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1044d7ac-dd68-4b20-9b03-8bc232c9c32f",
+              "leftValue": "={{ $json.data.approved }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1500,
+        0
+      ],
+      "id": "3de30b8c-cfa4-4ec0-aa50-c669d74b7cfb",
+      "name": "If Approved continue/If denied, edit2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "756506bc-df51-4d74-8c72-6cbe73a331d1",
+              "name": "documentID",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2000,
+        460
+      ],
+      "id": "7a9a1f9d-0981-4c0b-9c21-b07a0b48ac75",
+      "name": "Prepare Document Content (Facebook posts)"
+    },
+    {
+      "parameters": {
+        "folderId": "18LOdNOqMLdulhFN_Ok9CZlsG3NjFiUIJ",
+        "title": "Generated Blog Posts for Review and Editing"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        1780,
+        460
+      ],
+      "id": "07714233-0590-4ef8-955c-335d0da8c198",
+      "name": "google doc creation for Facebook post editing",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "xT47x3Mkz3wmdgpl",
+          "name": "Google Docs account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $json.documentID }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "insert",
+              "text": "={{ $('Generate Facebook post content').item.json.message.content }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        2220,
+        460
+      ],
+      "id": "6d38cc23-24ee-4671-b7c2-b3582186d683",
+      "name": "insert generated Facebook post",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "xT47x3Mkz3wmdgpl",
+          "name": "Google Docs account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "hoylelv@gmail.com",
+        "subject": "⚠️Blog Post denied, Review and edit",
+        "message": "=The failed blog post is in the document below:\n(https://docs.google.com/document/d/{{ $json.documentId }}\n\nPreview:\n{{ $('Generate Facebook post content').item.json.message.content }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2440,
+        460
+      ],
+      "id": "7fd64feb-7985-4bc6-a872-9eb4a117e632",
+      "name": "Alert Human in the loop (Facebook post)",
+      "webhookId": "9c13969d-0e4f-410a-85d5-095a118b250a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "kVg2eSRek3jAJk8v",
+          "name": "Gmail account 3"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2660,
+        460
+      ],
+      "id": "ab609b18-6829-41f2-8ed1-d37e7603736b",
+      "name": "Wait for manual edits (Facebook post)",
+      "webhookId": "95268593-96bd-4e11-8802-75189a2a3d41"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "={{ $('insert generated Facebook post').item.json.documentId }}"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        2880,
+        460
+      ],
+      "id": "6040f6fd-00fe-4e77-a55c-6872f988a148",
+      "name": "Retrieve Edited Transcript (Facebook post)",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "xT47x3Mkz3wmdgpl",
+          "name": "Google Docs account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Path Designator\n- This node reads the response given to the emailed data, approved or denied.\n- It then sends the data down the appropriate path, down the denied path for editing and reapproval, or down the approved path to posting node.",
+        "height": 480,
+        "width": 320,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1400,
+        -280
+      ],
+      "typeVersion": 1,
+      "id": "83830847-ef9c-4aa4-befc-0c16d08fe57d",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "## Editing and Re-approval nodes \n- A Google Doc is created for the purposes of editing the denied data.\n- Then the next node pulls the data variable into play again for easier access and usage.\n- The second Google Doc node is for the creation and identifying of the document ID.\n- An email is then sent with the link to edit the data, and a preview of the data needing to be edited.\n- A wait period takes place to allow for editing.\n- Then the next node automatically pulls whatever is in the document and retrieves it as data available to continue down the path.",
+        "height": 480,
+        "width": 1320,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1720,
+        200
+      ],
+      "typeVersion": 1,
+      "id": "65c12d67-dd6a-4594-bd6c-46b49b8020ec",
+      "name": "Sticky Note5"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Pull data from Wordpress Sermon Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pull data from Wordpress Sermon Post": {
+      "main": [
+        [
+          {
+            "node": "Pull transcript from Wordpress Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pull transcript from Wordpress Data": {
+      "main": [
+        [
+          {
+            "node": "clean up transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "clean up transcript": {
+      "main": [
+        [
+          {
+            "node": "Generate Facebook post content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Facebook post content": {
+      "main": [
+        [
+          {
+            "node": "Ouput sent for Approval/Disapproval",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Approved continue/If denied, edit2": {
+      "main": [
+        [],
+        [
+          {
+            "node": "google doc creation for Facebook post editing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ouput sent for Approval/Disapproval": {
+      "main": [
+        [
+          {
+            "node": "If Approved continue/If denied, edit2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Document Content (Facebook posts)": {
+      "main": [
+        [
+          {
+            "node": "insert generated Facebook post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "google doc creation for Facebook post editing": {
+      "main": [
+        [
+          {
+            "node": "Prepare Document Content (Facebook posts)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "insert generated Facebook post": {
+      "main": [
+        [
+          {
+            "node": "Alert Human in the loop (Facebook post)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alert Human in the loop (Facebook post)": {
+      "main": [
+        [
+          {
+            "node": "Wait for manual edits (Facebook post)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for manual edits (Facebook post)": {
+      "main": [
+        [
+          {
+            "node": "Retrieve Edited Transcript (Facebook post)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve Edited Transcript (Facebook post)": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "75159a1a-11de-4553-9318-8dc78d7de434",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "cc3e1148aa2db61e7cb9d918303b67c0578ab742bb9ca07d8e3e8334915c56f5"
+  },
+  "id": "5DL336OAAmx0FbCj",
+  "tags": []
+}
