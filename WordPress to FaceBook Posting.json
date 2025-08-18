@@ -86,7 +86,7 @@
       "name": "Generate Facebook post content",
       "credentials": {
         "openAiApi": {
-          "id": "mC6NHOdsPQp4zPij",
+          "id": "INSERT_YOURS_HERE",
           "name": "OpenAi account"
         }
       }
@@ -173,10 +173,10 @@
       ],
       "id": "7216e8e2-e5f9-44a4-bd9f-ffe83276857e",
       "name": "Ouput sent for Approval/Disapproval",
-      "webhookId": "0f87473f-e467-459c-9b7d-ce66fb868370",
+      "webhookId": "INSERT_YOURS_HERE",
       "credentials": {
         "gmailOAuth2": {
-          "id": "kVg2eSRek3jAJk8v",
+          "id": "INSERT_YOURS_HERE",
           "name": "Gmail account 3"
         }
       }
@@ -253,7 +253,7 @@
       "name": "google doc creation for Facebook post editing",
       "credentials": {
         "googleDocsOAuth2Api": {
-          "id": "xT47x3Mkz3wmdgpl",
+          "id": "INSERT_YOURS_HERE",
           "name": "Google Docs account 2"
         }
       }
@@ -281,7 +281,7 @@
       "name": "insert generated Facebook post",
       "credentials": {
         "googleDocsOAuth2Api": {
-          "id": "xT47x3Mkz3wmdgpl",
+          "id": "INSERT_YOURS_HERE",
           "name": "Google Docs account 2"
         }
       }
@@ -302,10 +302,10 @@
       ],
       "id": "7fd64feb-7985-4bc6-a872-9eb4a117e632",
       "name": "Alert Human in the loop (Facebook post)",
-      "webhookId": "9c13969d-0e4f-410a-85d5-095a118b250a",
+      "webhookId": "INSERT_YOURS_HERE",
       "credentials": {
         "gmailOAuth2": {
-          "id": "kVg2eSRek3jAJk8v",
+          "id": "INSERT_YOURS_HERE",
           "name": "Gmail account 3"
         }
       }
@@ -320,7 +320,7 @@
       ],
       "id": "ab609b18-6829-41f2-8ed1-d37e7603736b",
       "name": "Wait for manual edits (Facebook post)",
-      "webhookId": "95268593-96bd-4e11-8802-75189a2a3d41"
+      "webhookId": "INSERT_YOURS_HERE"
     },
     {
       "parameters": {
@@ -337,7 +337,7 @@
       "name": "Retrieve Edited Transcript (Facebook post)",
       "credentials": {
         "googleDocsOAuth2Api": {
-          "id": "xT47x3Mkz3wmdgpl",
+          "id": "INSERT_YOURS_HERE",
           "name": "Google Docs account 2"
         }
       }
@@ -523,8 +523,8 @@
   "versionId": "75159a1a-11de-4553-9318-8dc78d7de434",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "cc3e1148aa2db61e7cb9d918303b67c0578ab742bb9ca07d8e3e8334915c56f5"
+    "instanceId": "INSERT_YOURS_HERE"
   },
-  "id": "5DL336OAAmx0FbCj",
+  "id": "INSERT_YOURS_HERE",
   "tags": []
 }
