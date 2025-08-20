@@ -36,12 +36,10 @@ When a church uploads its latest sermon, these workflows pull the sermon’s tit
 ## 📂 Repository Structure
 
 ```
-/workflows       - n8n workflow export files (.json)
-/docs            - Setup and configuration instructions
-/templates       - Example post templates (long & short form)
-.gitignore       - Prevents committing sensitive or local files
-LICENSE          - MIT Open-Source Licensing
-README.md        - This file
+.gitignore                       - Prevents committing sensitive or local files
+LICENSE                          - MIT Open-Source Licensing
+README.md                        - This file
+wordpress-to-facebook-posting.json - Example n8n workflow
 ```
 
 ---
@@ -58,7 +56,7 @@ README.md        - This file
 2. **Import Workflows into n8n**
 
    * Open n8n.
-   * Go to **Import from File** and select a `.json` workflow from `/workflows`.
+   * Go to **Import from File** and select the `wordpress-to-facebook-posting.json` workflow file.
 
 3. **Configure Credentials**
 
