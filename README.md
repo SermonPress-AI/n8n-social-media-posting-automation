@@ -68,6 +68,8 @@ wordpress-to-facebook-posting.json - Example n8n workflow
    * Trigger the workflow manually with sample sermon data.
    * Verify the generated posts and ensure they appear correctly on your social media accounts.
 
+5. **Hello World**
+
 ---
 
 ## 🔒 Security Notes
