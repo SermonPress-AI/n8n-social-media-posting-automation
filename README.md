@@ -47,23 +47,24 @@ wordpress-to-facebook-posting.json - Example n8n workflow
 ## 🚀 Setup & Usage
 
 1. **Clone the Repository**
+2. **Hello World**
 
    ```bash
    git clone https://github.com/SermonPress-AI/n8n-social-media-posting-automation.git
    cd n8n-social-media-posting-automation
    ```
 
-2. **Import Workflows into n8n**
+3. **Import Workflows into n8n**
 
    * Open n8n.
    * Go to **Import from File** and select the `wordpress-to-facebook-posting.json` workflow file.
 
-3. **Configure Credentials**
+4. **Configure Credentials**
 
    * Add Facebook and any other platform credentials to n8n’s credentials manager.
    * Connect your sermon data source (API, RSS feed, etc.).
 
-4. **Test the Workflow**
+5. **Test the Workflow**
 
    * Trigger the workflow manually with sample sermon data.
    * Verify the generated posts and ensure they appear correctly on your social media accounts.
