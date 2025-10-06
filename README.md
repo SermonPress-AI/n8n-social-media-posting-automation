@@ -20,7 +20,7 @@ When a church uploads its latest sermon, these workflows pull the sermon’s tit
 ## 🛠 Requirements
 
 * **n8n** (self-hosted or cloud)
-* Access to your church’s sermon data (API, RSS feed, or other integration)
+* Access to your church’s sermon data (API, RSS feed, Wordpress, or other integration)
 * API credentials for connected social media platforms
   *(Store securely in n8n’s credentials manager or a `.env` file — never commit credentials to the repository.)*
 
@@ -47,7 +47,7 @@ wordpress-to-facebook-posting.json - Example n8n workflow
 ## 🚀 Setup & Usage
 
 1. **Clone the Repository**
-
+   *Start by downloading the JSON file onto your computer and then uploading that file to the n8n new project. You will then see a workflow already built, but you need to plug in the data for the individual nodes. Go to this link to download the workflow*
    ```bash
    git clone https://github.com/SermonPress-AI/n8n-social-media-posting-automation.git
    cd n8n-social-media-posting-automation
@@ -58,12 +58,26 @@ wordpress-to-facebook-posting.json - Example n8n workflow
    * Open n8n.
    * Go to **Import from File** and select the `wordpress-to-facebook-posting.json` workflow file.
 
-3. **Configure Credentials**
+3.**Getting the workflow running**
+    *Pull data from WordPress Sermon Post & Pull transcript from wordpress data: 
+	edit the node and plug in the website url (including the "https://") into the node. Set the "Method" to "GET" then run the node to see if it runs
+
+   * Generate Facebook post content: 
+ 	with the node, you will take the OpenAI key and either use the default prompt given or plug in your own prompt to use 
+
+
+  * Human-in-the-loop
+	Add your own credential by signing into your google account and then change the "to" section to your own email. after you run the node and all of the nodes before it you should get an email where you can approve or deny the information given
+
+
+
+4. **Configure Credentials**
+   
 
    * Add Facebook and any other platform credentials to n8n’s credentials manager.
    * Connect your sermon data source (API, RSS feed, etc.).
 
-4. **Test the Workflow**
+6. **Test the Workflow**
 
    * Trigger the workflow manually with sample sermon data.
    * Verify the generated posts and ensure they appear correctly on your social media accounts.
