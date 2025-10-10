@@ -47,7 +47,7 @@ wordpress-to-facebook-posting.json - Example n8n workflow
 ## 🚀 Setup & Usage
 
 1. **Clone the Repository**
-   *Start by downloading the JSON file onto your computer and then uploading that file to the n8n new project. You will then see a workflow already built, but you need to plug in the data for the individual nodes. Go to this link to download the workflow*
+   Start by downloading the JSON file onto your computer and then uploading that file to the n8n new project. You will then see a workflow already built, but you need to plug in the data for the individual nodes. Go to this link to download the workflow
    ```bash
    git clone https://github.com/SermonPress-AI/n8n-social-media-posting-automation.git
    cd n8n-social-media-posting-automation
@@ -58,11 +58,10 @@ wordpress-to-facebook-posting.json - Example n8n workflow
    * Open n8n.
    * Go to **Import from File** and select the `wordpress-to-facebook-posting.json` workflow file.
 
-3.**Getting the workflow running**
+3. **Getting the workflow running**
     *Pull data from WordPress Sermon Post & Pull transcript from wordpress data: 
 	edit the node and plug in the website url (including the "https://") into the node. Set the "Method" to "GET" then run the node to see if it runs
-
-   * Generate Facebook post content: 
+	* Generate Facebook post content: 
  	with the node, you will take the OpenAI key and either use the default prompt given or plug in your own prompt to use 
 
 
