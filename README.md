@@ -59,18 +59,17 @@ wordpress-to-facebook-posting.json - Example n8n workflow
    * Go to **Import from File** and select the `wordpress-to-facebook-posting.json` workflow file.
 
 3. **Getting the workflow running**
-    *Pull data from WordPress Sermon Post & Pull transcript from wordpress data: 
+
+    * Pull data from WordPress Sermon Post & Pull transcript from wordpress data: 
 	edit the node and plug in the website url (including the "https://") into the node. Set the "Method" to "GET" then run the node to see if it runs
 	* Generate Facebook post content: 
  	with the node, you will take the OpenAI key and either use the default prompt given or plug in your own prompt to use 
-
-
-  * Human-in-the-loop
+	* Human-in-the-loop
 	Add your own credential by signing into your google account and then change the "to" section to your own email. after you run the node and all of the nodes before it you should get an email where you can approve or deny the information given
 
 
 
-4. **Configure Credentials**
+5. **Configure Credentials**
    
 
    * Add Facebook and any other platform credentials to n8n’s credentials manager.
